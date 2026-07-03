@@ -4,7 +4,9 @@ version = "0.1.0"
 description = "RAG assistant with grounded citations and a real retrieval + faithfulness eval harness."
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "scikit-learn>=1.9.0",
+]
 
 [project.scripts]
 rag-knowledge-assistant = "rag_knowledge_assistant:main"

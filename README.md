@@ -21,7 +21,18 @@ Chunking is the biggest lever on retrieval quality, so it's explicit and tested:
 ```bash
 uv sync --dev
 uv run python -m rag_knowledge_assistant.pipeline   # corpus -> data/chunks.jsonl
-uv run pytest                                         # chunking invariants
+uv run pytest                                         # chunking + retrieval tests
+```
+
+## Retrieval (Day 16)
+
+- **Pluggable `Embedder` protocol.** Default is a **TF-IDF (lexical)** embedder — deterministic, offline, no model downloads, so CI stays fast and torch-free. A dense embedder (sentence-transformers) implements the same protocol and drops in.
+- **Why default to lexical?** The eval harness (Day 18) is what should *justify* a heavier embedder — measure first, upgrade second. TF-IDF is a strong, honest baseline.
+- **Vector store:** brute-force cosine over the ~1,296 chunks (exact, zero index maintenance). Approximate indexes (FAISS/HNSW) only earn their keep at much larger scale.
+
+```bash
+uv run python -m rag_knowledge_assistant.retrieval "how do transformers use attention?"
+# -> top chunks from the Attention and Transformer articles, with scores
 ```
 
 ## Project structure
@@ -33,8 +44,10 @@ rag-knowledge-assistant/
 ├── src/rag_knowledge_assistant/
 │   ├── ingestion.py              # load corpus documents
 │   ├── chunking.py               # paragraph-aware chunking + overlap
-│   └── pipeline.py               # corpus -> chunks.jsonl
-└── tests/test_chunking.py        # size, overlap, id/index, determinism
+│   ├── pipeline.py               # corpus -> chunks.jsonl
+│   ├── embeddings.py             # Embedder protocol + TF-IDF embedder
+│   └── retrieval.py              # brute-force cosine retriever
+└── tests/                        # chunking + retrieval (relevance, top-k, determinism)
 ```
 
 ## Roadmap
@@ -42,7 +55,7 @@ rag-knowledge-assistant/
 | Day | Deliverable |
 |---|---|
 | 15 ✅ | Ingestion + chunking pipeline |
-| 16 | Embeddings + vector index + retrieval |
+| 16 ✅ | Embeddings (pluggable) + cosine retrieval |
 | 17 | Grounded generation with inline citations |
 | 18 | **Retrieval eval** — recall@k, MRR, gold Q→passage set |
 | 19 | **Faithfulness eval** — LLM-as-judge + calibration note |
