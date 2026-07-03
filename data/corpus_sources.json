@@ -1,0 +1,128 @@
+{
+  "attention_machine_learning": {
+    "chars": 25591,
+    "license": "CC BY-SA 4.0",
+    "title": "Attention (machine learning)",
+    "url": "https://en.wikipedia.org/wiki/Attention_%28machine_learning%29"
+  },
+  "confusion_matrix": {
+    "chars": 8724,
+    "license": "CC BY-SA 4.0",
+    "title": "Confusion matrix",
+    "url": "https://en.wikipedia.org/wiki/Confusion_matrix"
+  },
+  "cosine_similarity": {
+    "chars": 33191,
+    "license": "CC BY-SA 4.0",
+    "title": "Cosine similarity",
+    "url": "https://en.wikipedia.org/wiki/Cosine_similarity"
+  },
+  "cross_validation_statistics": {
+    "chars": 37415,
+    "license": "CC BY-SA 4.0",
+    "title": "Cross-validation (statistics)",
+    "url": "https://en.wikipedia.org/wiki/Cross-validation_%28statistics%29"
+  },
+  "deep_learning": {
+    "chars": 56177,
+    "license": "CC BY-SA 4.0",
+    "title": "Deep learning",
+    "url": "https://en.wikipedia.org/wiki/Deep_learning"
+  },
+  "feature_engineering": {
+    "chars": 8147,
+    "license": "CC BY-SA 4.0",
+    "title": "Feature engineering",
+    "url": "https://en.wikipedia.org/wiki/Feature_engineering"
+  },
+  "gradient_boosting": {
+    "chars": 43581,
+    "license": "CC BY-SA 4.0",
+    "title": "Gradient boosting",
+    "url": "https://en.wikipedia.org/wiki/Gradient_boosting"
+  },
+  "hyperparameter_optimization": {
+    "chars": 10833,
+    "license": "CC BY-SA 4.0",
+    "title": "Hyperparameter optimization",
+    "url": "https://en.wikipedia.org/wiki/Hyperparameter_optimization"
+  },
+  "k_means_clustering": {
+    "chars": 57266,
+    "license": "CC BY-SA 4.0",
+    "title": "K-means clustering",
+    "url": "https://en.wikipedia.org/wiki/K-means_clustering"
+  },
+  "large_language_model": {
+    "chars": 56350,
+    "license": "CC BY-SA 4.0",
+    "title": "Large language model",
+    "url": "https://en.wikipedia.org/wiki/Large_language_model"
+  },
+  "logistic_regression": {
+    "chars": 238113,
+    "license": "CC BY-SA 4.0",
+    "title": "Logistic regression",
+    "url": "https://en.wikipedia.org/wiki/Logistic_regression"
+  },
+  "machine_learning": {
+    "chars": 58709,
+    "license": "CC BY-SA 4.0",
+    "title": "Machine learning",
+    "url": "https://en.wikipedia.org/wiki/Machine_learning"
+  },
+  "natural_language_processing": {
+    "chars": 32382,
+    "license": "CC BY-SA 4.0",
+    "title": "Natural language processing",
+    "url": "https://en.wikipedia.org/wiki/Natural_language_processing"
+  },
+  "overfitting": {
+    "chars": 15839,
+    "license": "CC BY-SA 4.0",
+    "title": "Overfitting",
+    "url": "https://en.wikipedia.org/wiki/Overfitting"
+  },
+  "precision_and_recall": {
+    "chars": 35640,
+    "license": "CC BY-SA 4.0",
+    "title": "Precision and recall",
+    "url": "https://en.wikipedia.org/wiki/Precision_and_recall"
+  },
+  "random_forest": {
+    "chars": 64056,
+    "license": "CC BY-SA 4.0",
+    "title": "Random forest",
+    "url": "https://en.wikipedia.org/wiki/Random_forest"
+  },
+  "regularization_mathematics": {
+    "chars": 69315,
+    "license": "CC BY-SA 4.0",
+    "title": "Regularization (mathematics)",
+    "url": "https://en.wikipedia.org/wiki/Regularization_%28mathematics%29"
+  },
+  "retrieval_augmented_generation": {
+    "chars": 10903,
+    "license": "CC BY-SA 4.0",
+    "title": "Retrieval-augmented generation",
+    "url": "https://en.wikipedia.org/wiki/Retrieval-augmented_generation"
+  },
+  "transformer_deep_learning": {
+    "chars": 122314,
+    "license": "CC BY-SA 4.0",
+    "title": "Transformer (deep learning)",
+    "url": "https://en.wikipedia.org/wiki/Transformer_%28deep_learning%29"
+  },
+  "vector_database": {
+    "chars": 3704,
+    "license": "CC BY-SA 4.0",
+    "title": "Vector database",
+    "url": "https://en.wikipedia.org/wiki/Vector_database"
+  },
+  "word_embedding": {
+    "chars": 10018,
+    "license": "CC BY-SA 4.0",
+    "title": "Word embedding",
+    "url": "https://en.wikipedia.org/wiki/Word_embedding"
+  }
+}
