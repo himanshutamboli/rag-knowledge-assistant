@@ -10,6 +10,42 @@
 
 Anyone can wire an LLM to a vector store. The hard part is *knowing whether retrieval actually works* and whether answers are *faithful* to the sources. This repo treats those as first-class, measured concerns (Days 18–19), not an afterthought.
 
+## Demo
+
+![Chat UI with streamed answer and cited sources](docs/ui.png)
+
+*Streaming answers with inline `[n]` citations back to clickable, scored sources. Run it: `uv run uvicorn rag_knowledge_assistant.api:app` → http://localhost:8000.*
+
+## Results at a glance
+
+| Retrieval (20-question gold set) | | Faithfulness (10 labeled cases) | |
+| --- | --- | --- | --- |
+| recall@1 | 0.875 | judge vs human labels | 100% |
+| recall@3 | 1.000 | end-to-end faithfulness | 0.998 |
+| **MRR** | **0.942** | | |
+
+Both evals are the point of the repo — details in [Retrieval evaluation](#retrieval-evaluation-day-18--the-differentiator) and [Faithfulness evaluation](#faithfulness-evaluation-day-19) below.
+
+## Architecture
+
+```
+ Wikipedia corpus (21 articles, committed + attributed)
+     │  ingestion.py
+     ▼
+ chunking.py  (paragraph-aware, 800/150 overlap)  ──►  chunks (provenance kept)
+     │  embeddings.py (pluggable: TF-IDF default)
+     ▼
+ retrieval.py  (brute-force cosine)  ──────────────►  evaluation.py  (recall@k, MRR)
+     │
+     ▼
+ generation.py  (grounded answer + [n] citations, refuses if unsupported)
+     │                                          └──►  faithfulness.py  (judge + calibration)
+     ▼
+ api.py  (FastAPI: SSE streaming + chat UI)
+```
+
+Every stage is tested; both evals run over committed gold sets.
+
 ## Ingestion & chunking (Day 15)
 
 Chunking is the biggest lever on retrieval quality, so it's explicit and tested:
@@ -111,7 +147,7 @@ rag-knowledge-assistant/
 | 18 ✅ | **Retrieval eval** — recall@k, MRR, 20-question gold set |
 | 19 ✅ | **Faithfulness eval** — judge + calibration vs human labels |
 | 20 ✅ | Streaming (SSE) API + chat UI with citations |
-| 21 | Ship v1.0 |
+| 21 ✅ | Ship v1.0 (eval tables up top, demo, architecture) |
 
 ## Data source
 
