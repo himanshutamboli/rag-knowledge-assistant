@@ -47,6 +47,14 @@ uv run python -m rag_knowledge_assistant.generation "what is overfitting and how
 # -> grounded answer with [1]..[4] citations to Overfitting, Regularization, ... + URLs
 ```
 
+## Interface (Day 20)
+
+A **FastAPI** app with a streaming chat UI. `/stream` emits the answer over **Server-Sent Events** (word-by-word) followed by a `citations` event; the minimal single-page UI at `/` renders the streaming answer and clickable, scored source links. `/ask` returns the same as JSON.
+
+```bash
+uv run uvicorn rag_knowledge_assistant.api:app --reload   # open http://localhost:8000
+```
+
 ## Retrieval evaluation (Day 18) — the differentiator
 
 A hand-built **gold set of 20 question→document pairs** ([`eval/gold_retrieval.jsonl`](eval/gold_retrieval.jsonl)) drives `recall@k` and `MRR`. This is the part most RAG repos skip — without it you can't know whether retrieval works or whether an embedder change helped.
@@ -85,7 +93,8 @@ rag-knowledge-assistant/
 │   ├── retrieval.py              # brute-force cosine retriever
 │   ├── generation.py             # grounded answers + citations + refusal
 │   ├── evaluation.py             # recall@k + MRR over the gold set
-│   └── faithfulness.py           # LLM-as-judge / heuristic faithfulness + calibration
+│   ├── faithfulness.py           # LLM-as-judge / heuristic faithfulness + calibration
+│   └── api.py                    # FastAPI: SSE streaming endpoint + chat UI
 ├── eval/
 │   ├── gold_retrieval.jsonl      # 20 gold question -> document pairs
 │   └── faithfulness_cases.jsonl  # 10 hand-labeled faithful/unfaithful cases
@@ -101,7 +110,7 @@ rag-knowledge-assistant/
 | 17 ✅ | Grounded generation + inline citations + refusal |
 | 18 ✅ | **Retrieval eval** — recall@k, MRR, 20-question gold set |
 | 19 ✅ | **Faithfulness eval** — judge + calibration vs human labels |
-| 20 | Streaming API + minimal chat UI |
+| 20 ✅ | Streaming (SSE) API + chat UI with citations |
 | 21 | Ship v1.0 |
 
 ## Data source
