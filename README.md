@@ -61,6 +61,16 @@ A hand-built **gold set of 20 question→document pairs** ([`eval/gold_retrieval
 
 **Read:** the TF-IDF baseline is strong on this corpus (recall@3 = 100%, MRR = 0.94) because the questions are keyword-aligned with the Wikipedia titles. That's the honest finding — and it's now the *measured* bar a dense embedder would have to beat to justify the extra dependency. Relevance is judged at the document level; regenerate with `uv run python -m rag_knowledge_assistant.evaluation`.
 
+## Faithfulness evaluation (Day 19)
+
+Is the answer actually supported by the retrieved sources? A pluggable **`Judge`** scores (answer, context) grounding. Default `HeuristicJudge` (lexical overlap, offline) is the CI baseline; `ClaudeJudge` (`claude-opus-4-8`) is a drop-in LLM-as-judge.
+
+The senior move is **calibrating the judge against human labels** rather than trusting it blind:
+
+- On **10 hand-labeled cases** ([`eval/faithfulness_cases.jsonl`](eval/faithfulness_cases.jsonl)), the heuristic judge agrees with human labels **100%** at threshold 0.6 (faithful cases score ~1.0; fabricated answers 0.08–0.22).
+- End-to-end, the extractive generator's answers score **0.998** mean faithfulness (they quote the sources, so grounding is near-total by construction).
+- **Documented failure modes:** the lexical judge measures word overlap, not meaning — it can pass a claim that reuses source vocabulary but reverses it, and penalize synonym paraphrases. For semantic faithfulness use `ClaudeJudge`, but *validate it against human labels the same way*. Full note: [`reports/faithfulness_eval.md`](reports/faithfulness_eval.md).
+
 ## Project structure
 
 ```
@@ -74,9 +84,12 @@ rag-knowledge-assistant/
 │   ├── embeddings.py             # Embedder protocol + TF-IDF embedder
 │   ├── retrieval.py              # brute-force cosine retriever
 │   ├── generation.py             # grounded answers + citations + refusal
-│   └── evaluation.py             # recall@k + MRR over the gold set
-├── eval/gold_retrieval.jsonl     # 20 gold question -> document pairs
-└── tests/                        # chunking, retrieval, generation, eval metrics
+│   ├── evaluation.py             # recall@k + MRR over the gold set
+│   └── faithfulness.py           # LLM-as-judge / heuristic faithfulness + calibration
+├── eval/
+│   ├── gold_retrieval.jsonl      # 20 gold question -> document pairs
+│   └── faithfulness_cases.jsonl  # 10 hand-labeled faithful/unfaithful cases
+└── tests/                        # chunking, retrieval, generation, retrieval eval, faithfulness
 ```
 
 ## Roadmap
@@ -87,7 +100,7 @@ rag-knowledge-assistant/
 | 16 ✅ | Embeddings (pluggable) + cosine retrieval |
 | 17 ✅ | Grounded generation + inline citations + refusal |
 | 18 ✅ | **Retrieval eval** — recall@k, MRR, 20-question gold set |
-| 19 | **Faithfulness eval** — LLM-as-judge + calibration note |
+| 19 ✅ | **Faithfulness eval** — judge + calibration vs human labels |
 | 20 | Streaming API + minimal chat UI |
 | 21 | Ship v1.0 |
 
