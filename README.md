@@ -35,6 +35,18 @@ uv run python -m rag_knowledge_assistant.retrieval "how do transformers use atte
 # -> top chunks from the Attention and Transformer articles, with scores
 ```
 
+## Grounded generation + citations (Day 17)
+
+Answers are generated **only** from retrieved sources, with inline `[n]` citations back to the source article + URL. If retrieval is too weak, the assistant **refuses** rather than hallucinate.
+
+- **Pluggable `Generator`.** Default `ExtractiveGenerator` is deterministic and offline (no API key) — it selects the most query-relevant sentence per source and cites it; used in tests/CI. `ClaudeGenerator` (`claude-opus-4-8`) is a drop-in for fluent grounded answers when an API key is present.
+- **Refusal.** A zero-overlap query (`"banana bread recipe"`) refuses cleanly. Refusal here is a single lexical-score threshold — a deliberately simple mechanism; **calibrating it properly is exactly what the retrieval + faithfulness eval harness (Days 18–19) is for.**
+
+```bash
+uv run python -m rag_knowledge_assistant.generation "what is overfitting and how do you prevent it?"
+# -> grounded answer with [1]..[4] citations to Overfitting, Regularization, ... + URLs
+```
+
 ## Project structure
 
 ```
@@ -46,8 +58,9 @@ rag-knowledge-assistant/
 │   ├── chunking.py               # paragraph-aware chunking + overlap
 │   ├── pipeline.py               # corpus -> chunks.jsonl
 │   ├── embeddings.py             # Embedder protocol + TF-IDF embedder
-│   └── retrieval.py              # brute-force cosine retriever
-└── tests/                        # chunking + retrieval (relevance, top-k, determinism)
+│   ├── retrieval.py              # brute-force cosine retriever
+│   └── generation.py             # grounded answers + citations + refusal
+└── tests/                        # chunking, retrieval, generation (citations + refusal)
 ```
 
 ## Roadmap
@@ -56,7 +69,7 @@ rag-knowledge-assistant/
 |---|---|
 | 15 ✅ | Ingestion + chunking pipeline |
 | 16 ✅ | Embeddings (pluggable) + cosine retrieval |
-| 17 | Grounded generation with inline citations |
+| 17 ✅ | Grounded generation + inline citations + refusal |
 | 18 | **Retrieval eval** — recall@k, MRR, gold Q→passage set |
 | 19 | **Faithfulness eval** — LLM-as-judge + calibration note |
 | 20 | Streaming API + minimal chat UI |
