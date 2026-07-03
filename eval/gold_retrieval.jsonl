@@ -1,0 +1,20 @@
+{"question": "What is overfitting in machine learning?", "relevant_doc_ids": ["overfitting"]}
+{"question": "How does regularization help prevent overfitting?", "relevant_doc_ids": ["regularization_mathematics", "overfitting"]}
+{"question": "What is the difference between precision and recall?", "relevant_doc_ids": ["precision_and_recall"]}
+{"question": "How is a confusion matrix used to evaluate a classifier?", "relevant_doc_ids": ["confusion_matrix"]}
+{"question": "What is cross-validation and why is it used?", "relevant_doc_ids": ["cross_validation_statistics"]}
+{"question": "How does the transformer architecture work?", "relevant_doc_ids": ["transformer_deep_learning"]}
+{"question": "What is the attention mechanism in deep learning?", "relevant_doc_ids": ["attention_machine_learning"]}
+{"question": "What is retrieval-augmented generation?", "relevant_doc_ids": ["retrieval_augmented_generation"]}
+{"question": "What is a vector database used for?", "relevant_doc_ids": ["vector_database"]}
+{"question": "What are word embeddings?", "relevant_doc_ids": ["word_embedding"]}
+{"question": "How does k-means clustering work?", "relevant_doc_ids": ["k_means_clustering"]}
+{"question": "What is cosine similarity?", "relevant_doc_ids": ["cosine_similarity"]}
+{"question": "How does gradient boosting build a model?", "relevant_doc_ids": ["gradient_boosting"]}
+{"question": "What is a random forest classifier?", "relevant_doc_ids": ["random_forest"]}
+{"question": "What is logistic regression used for?", "relevant_doc_ids": ["logistic_regression"]}
+{"question": "What is a large language model?", "relevant_doc_ids": ["large_language_model"]}
+{"question": "What is feature engineering?", "relevant_doc_ids": ["feature_engineering"]}
+{"question": "What is hyperparameter optimization?", "relevant_doc_ids": ["hyperparameter_optimization"]}
+{"question": "What is deep learning?", "relevant_doc_ids": ["deep_learning"]}
+{"question": "What is natural language processing?", "relevant_doc_ids": ["natural_language_processing"]}

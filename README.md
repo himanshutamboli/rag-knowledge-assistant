@@ -47,6 +47,20 @@ uv run python -m rag_knowledge_assistant.generation "what is overfitting and how
 # -> grounded answer with [1]..[4] citations to Overfitting, Regularization, ... + URLs
 ```
 
+## Retrieval evaluation (Day 18) — the differentiator
+
+A hand-built **gold set of 20 question→document pairs** ([`eval/gold_retrieval.jsonl`](eval/gold_retrieval.jsonl)) drives `recall@k` and `MRR`. This is the part most RAG repos skip — without it you can't know whether retrieval works or whether an embedder change helped.
+
+| metric | value |
+| --- | --- |
+| recall@1 | 0.875 |
+| recall@3 | 1.000 |
+| recall@5 | 1.000 |
+| recall@10 | 1.000 |
+| **MRR** | **0.942** |
+
+**Read:** the TF-IDF baseline is strong on this corpus (recall@3 = 100%, MRR = 0.94) because the questions are keyword-aligned with the Wikipedia titles. That's the honest finding — and it's now the *measured* bar a dense embedder would have to beat to justify the extra dependency. Relevance is judged at the document level; regenerate with `uv run python -m rag_knowledge_assistant.evaluation`.
+
 ## Project structure
 
 ```
@@ -59,8 +73,10 @@ rag-knowledge-assistant/
 │   ├── pipeline.py               # corpus -> chunks.jsonl
 │   ├── embeddings.py             # Embedder protocol + TF-IDF embedder
 │   ├── retrieval.py              # brute-force cosine retriever
-│   └── generation.py             # grounded answers + citations + refusal
-└── tests/                        # chunking, retrieval, generation (citations + refusal)
+│   ├── generation.py             # grounded answers + citations + refusal
+│   └── evaluation.py             # recall@k + MRR over the gold set
+├── eval/gold_retrieval.jsonl     # 20 gold question -> document pairs
+└── tests/                        # chunking, retrieval, generation, eval metrics
 ```
 
 ## Roadmap
@@ -70,7 +86,7 @@ rag-knowledge-assistant/
 | 15 ✅ | Ingestion + chunking pipeline |
 | 16 ✅ | Embeddings (pluggable) + cosine retrieval |
 | 17 ✅ | Grounded generation + inline citations + refusal |
-| 18 | **Retrieval eval** — recall@k, MRR, gold Q→passage set |
+| 18 ✅ | **Retrieval eval** — recall@k, MRR, 20-question gold set |
 | 19 | **Faithfulness eval** — LLM-as-judge + calibration note |
 | 20 | Streaming API + minimal chat UI |
 | 21 | Ship v1.0 |
